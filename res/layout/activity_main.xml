@@ -1,0 +1,171 @@
+<view
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    class="com.eebbk.systemuimodedemo.MainActivity$MyContent" 
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/test_bk"
+    tools:context=".MainActivity" 
+    >
+    
+    <RelativeLayout
+        android:id="@+id/cb_container"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        >
+        
+        <CheckBox
+            android:id="@+id/cb_mode_show_full_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="MODE_IMMERSIVE_STICKY"
+            />
+        
+       	<CheckBox
+            android:id="@+id/cb_mode_hide_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cb_mode_show_full_screen"
+            android:text="MODE_HIDE_NAV"
+            />
+       	
+       	<CheckBox
+            android:id="@+id/cb_mode_trans_system_ui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cb_mode_hide_nav"
+            android:text="MODE_TRANS_SYSTEM_UI"
+            />
+       	
+        <CheckBox
+            android:id="@+id/cb_mode_low_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cb_mode_trans_system_ui"
+            android:text="MODE_LOW_PROFILE"
+            />
+        
+        <CheckBox
+            android:id="@+id/cb_mode_custom_bar_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cb_mode_low_profile"
+            android:text="MODE_CUSTOM_BAR_COLOR"
+            />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/btn_container"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="20dp"
+    	android:layout_below="@+id/cb_container"
+    	>
+       	
+        <Button
+        	android:id="@+id/btn_show_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="notification"
+            />
+        
+        <Button
+        	android:id="@+id/btn_custom_opaque"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/btn_show_notification"
+            android:text="custom opaque"
+            />
+        <Button
+        	android:id="@+id/btn_custom_trans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_show_notification"
+            android:layout_toRightOf="@+id/btn_custom_opaque"
+            android:text="custom trans"
+            />
+        
+        <Button
+        	android:id="@+id/btn_goto_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/btn_custom_opaque"
+            android:text="GoTo normal"
+            />
+        
+       <Button
+        	android:id="@+id/btn_goto_low_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/btn_goto_normal"
+            android:text="GoTo LowProfile"
+            />
+                
+       <Button
+        	android:id="@+id/btn_goto_full_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/btn_goto_low_profile"
+            android:text="GoTo FullScreen"
+            />
+                        
+       <Button
+        	android:id="@+id/btn_goto_translucent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/btn_goto_full_screen"
+            android:text="GoTo Translucent"
+            />
+       
+		<Button 
+        	android:id="@+id/btn_goto_wallpaper"
+			android:layout_width="wrap_content"
+           	android:layout_height="wrap_content" 
+           	android:layout_below="@+id/btn_goto_translucent" 
+			android:text="GoTo Wallpaper"
+			/>
+		
+		<EditText 
+			android:id="@+id/et_test"
+          	android:layout_width="100dp"
+        	android:layout_height="40dp"
+			android:layout_below="@+id/btn_goto_wallpaper" 
+        	android:privateImeOptions="eebbk.softinput"
+        	/>
+	
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/tv_size_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_container"
+        android:textColor="#ffff0000"
+        android:text="@string/hello_world" 
+        />
+    
+	<ListView
+        android:id="@+id/lv_test"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        />
+    
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" 
+        android:layout_alignParentBottom="true"
+        android:text="Click Me!!"
+        />
+	
+</view>
