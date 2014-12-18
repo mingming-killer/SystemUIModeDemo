@@ -1,6 +1,8 @@
 package com.eebbk.systemuimodedemo;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -13,12 +15,14 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,6 +35,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	// after update sdk, you can access View.xx directly.
 	//public static final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 	//public static final int SYSTEM_UI_FLAG_TRANSLUCENT_BAR = View.SYSTEM_UI_FLAG_TRANSLUCENT_BAR;
+	
+    private final static int MSG_UI_CHANGE_SYSTEM_FLAG = 100;
+    private final static int MSG_UI_POPUP_WINDOW = 101;
 	
 	private Rect mRect = new Rect();
 	
@@ -54,6 +61,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	private Button mBtnGoToWallpaper;
 	private Button mBtnCustomOpaque;
 	private Button mBtnCustomTrans;
+	
+    private Button mBtnClick;
+    private boolean mPopup = false;
+    
+    private PopupWindow mWin = null;
+    private Handler mUIHandler = null;
 	
 
 	@Override
@@ -79,6 +92,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		mBtnGoToWallpaper = (Button) findViewById(R.id.btn_goto_wallpaper);
 		mBtnCustomOpaque = (Button) findViewById(R.id.btn_custom_opaque);
 		mBtnCustomTrans = (Button) findViewById(R.id.btn_custom_trans);
+		mBtnClick = (Button) findViewById(R.id.btn_click);
 		
         mLvTest.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, mStrings));
@@ -99,7 +113,78 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		mBtnGoToWallpaper.setOnClickListener(this);
 		mBtnCustomOpaque.setOnClickListener(this);
 		mBtnCustomTrans.setOnClickListener(this);
+		mBtnClick.setOnClickListener(this);
+		
+		initHandler();
 	}
+	
+    private void initHandler() {
+        if (null == mUIHandler) {
+            mUIHandler = new Handler(new Handler.Callback() {
+
+                @Override
+                public boolean handleMessage(Message msg) {
+                    try {
+                        switch (msg.what) {
+                        case MSG_UI_CHANGE_SYSTEM_FLAG:
+                            handleUIChangeSystemFlag();
+                            break;
+
+                        default:
+                            break;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return false;
+                }
+
+            });
+
+        }
+    }
+
+    private void handleUIPopupWindow() {
+        popupWindow();
+        handleUIChangeSystemFlag();
+        mPopup = false;
+    }
+
+    private void handleUIChangeSystemFlag() {
+        View content = mWin.getContentView();
+        //View parent = (View) content.getParent();
+        //if (null == parent) {
+        //  parent = content;
+        //}
+        //Log.d("test", "parent view=" + parent);
+        int vis = content.getSystemUiVisibility();
+        //if (0 == (vis & View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY) 
+        //      || 0 == (vis & View.SYSTEM_UI_FLAG_TRANSLUCENT_BAR)) {
+        //  vis |= (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_TRANSLUCENT_BAR);
+        //  content.setSystemUiVisibility(vis);
+        //}
+        vis &= ~(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_TRANSLUCENT_BAR);
+        content.setSystemUiVisibility(vis);
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mPopup) {
+            mUIHandler.sendEmptyMessageDelayed(MSG_UI_POPUP_WINDOW, 500);
+            //popupWindow();
+            //handleUIChangeSystemFlag();
+            //mUIHandler.sendEmptyMessageDelayed(MSG_UI_CHANGE_SYSTEM_FLAG, 2000);
+            //mPopup = false;
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPopup = true;
+    }
 	
     @Override
     public void onAttachedToWindow() {
@@ -142,6 +227,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 			goToTranslucent();
 		} else if (v.equals(mBtnGoToWallpaper)) {
 			goToWallpaper();
+		} else if (v.equals(mBtnCustomOpaque)) {
+			setCustomBarOpaque();
+		} else if (v.equals(mBtnCustomTrans)) {
+			setCustomBarTrans();
+		} else if (v.equals(mBtnClick)) {
+			popupWindow();
 		}
 	}
 	
@@ -305,6 +396,39 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private void goToWallpaper() {
     	Intent intent = new Intent(this, WallpaperActivity.class);
     	startActivity(intent);
+    }
+    
+    private void setCustomBarOpaque() {
+    	// the resource must be drawable !!
+    	Utils.setCustomBarColor(mContent, getPackageName(), "custom_bar_opaque");
+    }
+    
+    private void setCustomBarTrans() {
+    	// the resource must be drawable !!
+    	Utils.setCustomBarColor(mContent, getPackageName(), "custom_bar_trans");
+    }
+    
+    private void popupWindow() {
+        LayoutInflater inflater = getLayoutInflater();
+        View content = inflater.inflate(R.layout.popup_view, null);
+        PopupWindow win = new PopupWindow(this);
+        win.setWidth(200);
+        win.setHeight(150);
+        win.setContentView(content);
+        win.setOutsideTouchable(true);
+        win.setFocusable(true);
+        win.showAsDropDown(mBtnClick);
+        mWin = win;
+            
+        /*View parent = (View) content.getParent();
+        if (null == parent) {
+            parent = content;
+        }
+        Log.d("test", "parent view=" + parent);
+        int vis = parent.getSystemUiVisibility();
+        vis &= ~View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        vis &= ~View.SYSTEM_UI_FLAG_TRANSLUCENT_BAR;
+        parent.setSystemUiVisibility(vis);*/
     }
     
     public static class MyContent extends RelativeLayout implements View.OnSystemUiVisibilityChangeListener {

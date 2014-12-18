@@ -1,11 +1,6 @@
 package com.eebbk.systemuimodedemo;
 
 import android.app.Activity;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.NinePatch;
-import android.graphics.drawable.NinePatchDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +10,7 @@ public class NormalActivity extends Activity implements View.OnClickListener {
 	
 	@SuppressWarnings("unused")
 	private View mContent = null;
+	@SuppressWarnings("unused")
 	private TextView mTv = null;
 	private Button mBtnTest = null;
 	
@@ -28,14 +24,6 @@ public class NormalActivity extends Activity implements View.OnClickListener {
 		mBtnTest = (Button) findViewById(R.id.btn_test);
 		
 		mBtnTest.setOnClickListener(this);
-		
-		// for test .9 file
-		//Resources res = getResources();
-		//Bitmap bmp = BitmapFactory.decodeResource(res, R.drawable.custom_bar_trans);
-		//NinePatchDrawable ndr = new NinePatchDrawable(
-		//		new NinePatch(bmp, bmp.getNinePatchChunk(), "9-patch"));
-		//mTv.setBackground(ndr);
-		mTv.setBackgroundResource(R.drawable.custom_bar_trans);
 	}
 
 	@Override
