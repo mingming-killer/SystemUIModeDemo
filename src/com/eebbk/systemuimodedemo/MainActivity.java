@@ -3,6 +3,7 @@ package com.eebbk.systemuimodedemo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -144,14 +145,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         }
     }
-
-    private void handleUIPopupWindow() {
+    
+    @SuppressWarnings("unused")
+	private void handleUIPopupWindow() {
         popupWindow();
         handleUIChangeSystemFlag();
         mPopup = false;
     }
 
-    private void handleUIChangeSystemFlag() {
+    @SuppressLint("InlinedApi")
+	private void handleUIChangeSystemFlag() {
         View content = mWin.getContentView();
         //View parent = (View) content.getParent();
         //if (null == parent) {
@@ -399,16 +402,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
     
     private void setCustomBarOpaque() {
-    	// the resource must be drawable !!
+    	// custom bar resource must be drawable !!
     	Utils.setCustomBarColor(mContent, getPackageName(), "custom_bar_opaque");
     }
     
     private void setCustomBarTrans() {
-    	// the resource must be drawable !!
+    	// custom bar resource must be drawable !!
     	Utils.setCustomBarColor(mContent, getPackageName(), "custom_bar_trans");
     }
     
-    private void popupWindow() {
+    @SuppressLint("InflateParams")
+	private void popupWindow() {
         LayoutInflater inflater = getLayoutInflater();
         View content = inflater.inflate(R.layout.popup_view, null);
         PopupWindow win = new PopupWindow(this);

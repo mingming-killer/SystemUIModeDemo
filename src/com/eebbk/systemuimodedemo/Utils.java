@@ -6,45 +6,12 @@ import java.lang.reflect.Modifier;
 
 import android.view.View;
 
-/**
- * 
- * Some java reflect tools.
- * But don't use frequently.
- * 
- * @author humingming <humingming@oaserver.dw.gdbbk.com>
- *
- */
 public class Utils {
 	
+	@SuppressWarnings("rawtypes")
 	private final static Class[] SET_CUSTOM_BAR_COLOR  = new Class[] {
 		String.class, String.class
 	};
-
-	/*private static Field mFlingEndField = null;
-	private static Method mFlingEndMethod = null;
-
-	static {
-		try {
-			// use java reflect to find the AbsListView private field mFlingRunnable.
-			// and it's have a method endFling can stop fling.
-			mFlingEndField = AbsListView.class.getDeclaredField("mFlingRunnable");
-	        mFlingEndField.setAccessible(true);
-	        mFlingEndMethod = mFlingEndField.getType().getDeclaredMethod("endFling");
-	        mFlingEndMethod.setAccessible(true);
-	    } catch (Exception e) {
-	        mFlingEndMethod = null;
-	    }
-	}
-	
-	public static void forceStopFling(AbsListView list) {
-		if (mFlingEndMethod != null) {
-	    	try {
-	    		mFlingEndMethod.invoke(mFlingEndField.get(list));
-	        } catch (Exception e) {
-	        	// ignore it
-	        }	
-		}
-	}*/
 	
 	/**
 	 * Create a new specified class object.
@@ -263,6 +230,9 @@ public class Utils {
 	}
 	
 	public static void setCustomBarColor(Object obj, String pkg, String resName) {
+		// we use reflect to access our platform api ... ...
+		// or you can get the custom sdk to access this directly: 
+		//   View.setCustomBarColor(String, String)
     	invokeMethod(View.class, obj, 
     			"setCustomBarColor", 
     			SET_CUSTOM_BAR_COLOR, 
