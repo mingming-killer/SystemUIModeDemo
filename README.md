@@ -12,14 +12,33 @@ public static final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = 0x00001000;
 public static final int SYSTEM_UI_FLAG_TRANSLUCENT_BAR = 0x00000800;
 
 
+--------------------------------------------------------
+--------------------------------------------------------
+
+
 3： View.SYSTEM_UI_FLAG_CUSTOM_BAR_COLOR：
-设置这个标志后，系统状态栏会使用应用设置的自定义 drawable 作为背景。可以使用不透明的，也可以使用透明的。自定义透明的背景要在半透明模式下才会有透明效果。在开启这个标志前请使用：
+设置这个标志后，能够自定义系统状态栏的一些元素。在开启这个标志前请使用：
 
 // pkg：包名，就是这个自定义 drawable 所在的 apk 的包名
+// types：自定义的元素类型
 // resName： 自定义 drawable 的名字，注意资源一定要是 drawable
-View.setCustomBarColor(String pkg, String resName)
+View.setCustomBarColor(String pkg, int[] types String[] resNames)
 
-去设置定义的状态栏背景。否则开启后如果没用设置自定义 drawable 是无效的，或是之前设置的 drawable。
+type 的目前支持的类型有：
+    public static final int STATUS_BAR_BACKGROUND = View.STATUS_BAR_BACKGROUND;
+    public static final int STATUS_BAR_CLOCK = View.STATUS_BAR_CLOCK;
+    public static final int STATUS_BAR_BATTERY = View.STATUS_BAR_BATTERY;
+    public static final int STATUS_BAR_BATTERY_CHARGE = View.STATUS_BAR_BATTERY_CHARGE;
+    public static final int STATUS_BAR_WIFI = View.STATUS_BAR_WIFI;
+    public static final int STATUS_BAR_WIFI_ACT = View.STATUS_BAR_WIFI_ACT;
+    public static final int STATUS_BAR_ALARM = View.STATUS_BAR_ALARM;
+    public static final int STATUS_BAR_SOUND = View.STATUS_BAR_SOUND;
+
+resNames 要和 types 一一对应，然后每种 type 的 drawable 类型都要和原来系统使用的类型一致。具体的可以看 demo 里面的例子。资源类型照着 demo 的模板来就行了。
+
+
+--------------------------------------------------------
+--------------------------------------------------------
 
 4.2 原有模式：
 1： View.SYSTEM_UI_FLAG_HIDE_NAVIGATION：
