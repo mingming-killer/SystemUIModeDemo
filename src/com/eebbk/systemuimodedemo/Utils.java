@@ -10,7 +10,7 @@ public class Utils {
 	
 	@SuppressWarnings("rawtypes")
 	private final static Class[] SET_CUSTOM_BAR_COLOR  = new Class[] {
-		String.class, String.class
+		String.class, int[].class, String[].class
 	};
 	
 	/**
@@ -229,14 +229,14 @@ public class Utils {
 	    }
 	}
 	
-	public static void setCustomBarColor(Object obj, String pkg, String resName) {
+	public static void setCustomBarColor(Object obj, String pkg, int[] types, String[] resNames) {
 		// we use reflect to access our platform api ... ...
 		// or you can get the custom sdk to access this directly: 
-		//   View.setCustomBarColor(String, String)
+		//   View.setCustomBarColor(String, int[], String[])
     	invokeMethod(View.class, obj, 
     			"setCustomBarColor", 
     			SET_CUSTOM_BAR_COLOR, 
-    			pkg, resName);
+    			pkg, types, resNames);
 	}
 	
 }

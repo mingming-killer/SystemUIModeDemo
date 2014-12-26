@@ -6,24 +6,31 @@
     android:id="@+id/content"
     >
 	
-    <TextView
-        android:id="@+id/tv_1"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
+    <FrameLayout
+        android:id="@+id/container" 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="This status background test !!"
-        android:textColor="#ff000000"
-        android:textSize="18sp"
         android:background="#ffff0000"
-        />
+        >
+    	<ImageView
+        	android:id="@+id/iv_test1"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	/>
+    	<ImageView
+        	android:id="@+id/iv_test2"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	/>
+    </FrameLayout>
     
     <Button
         android:id="@+id/btn_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_below="@+id/tv_1"
+        android:layout_below="@+id/container"
         android:textColor="#ffff0000"
         android:text="Test" 
         />

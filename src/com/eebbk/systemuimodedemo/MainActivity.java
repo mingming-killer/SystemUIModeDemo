@@ -33,12 +33,68 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	public static final int SYSTEM_UI_FLAG_TRANSLUCENT_BAR  = 0x00000800;
 	public static final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = 0x00001000;
 	public static final int SYSTEM_UI_FLAG_CUSTOM_BAR_COLOR = 0x00002000;
+	
+    // this is custom status bar elements: 
+    public static final int STATUS_BAR_BACKGROUND = 0;
+    public static final int STATUS_BAR_CLOCK = 1;
+    public static final int STATUS_BAR_BATTERY = 2;
+    public static final int STATUS_BAR_BATTERY_CHARGE = 3;
+    public static final int STATUS_BAR_BATTERY_NO_HEALTH = 4;
+    public static final int STATUS_BAR_WIFI = 5;
+    public static final int STATUS_BAR_WIFI_ACT = 6;
+    public static final int STATUS_BAR_ALARM = 7;
+    public static final int STATUS_BAR_SOUND = 8;
+	
 	// after update sdk, you can access View.xx directly.
-	//public static final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-	//public static final int SYSTEM_UI_FLAG_TRANSLUCENT_BAR = View.SYSTEM_UI_FLAG_TRANSLUCENT_BAR;
+	/*public static final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+	public static final int SYSTEM_UI_FLAG_TRANSLUCENT_BAR = View.SYSTEM_UI_FLAG_TRANSLUCENT_BAR;
+    
+    public static final int STATUS_BAR_BACKGROUND = View.STATUS_BAR_BACKGROUND;
+    public static final int STATUS_BAR_CLOCK = View.STATUS_BAR_CLOCK;
+    public static final int STATUS_BAR_BATTERY = View.STATUS_BAR_BATTERY;
+    public static final int STATUS_BAR_BATTERY_CHARGE = View.STATUS_BAR_BATTERY_CHARGE;
+    public static final int STATUS_BAR_WIFI = View.STATUS_BAR_WIFI;
+    public static final int STATUS_BAR_WIFI_ACT = View.STATUS_BAR_WIFI_ACT;
+    public static final int STATUS_BAR_ALARM = View.STATUS_BAR_ALARM;
+    public static final int STATUS_BAR_SOUND = View.STATUS_BAR_SOUND;*/
 	
     private final static int MSG_UI_CHANGE_SYSTEM_FLAG = 100;
     private final static int MSG_UI_POPUP_WINDOW = 101;
+	
+	private String mPkgName = null;
+	private int[] mCustomTypes = new int[] {
+		STATUS_BAR_BACKGROUND,
+	    STATUS_BAR_CLOCK,
+	    STATUS_BAR_BATTERY,
+	    STATUS_BAR_BATTERY_CHARGE,
+	    STATUS_BAR_BATTERY_NO_HEALTH,
+	    STATUS_BAR_WIFI,
+	    STATUS_BAR_WIFI_ACT,
+	    STATUS_BAR_ALARM,
+	    STATUS_BAR_SOUND,	
+	};
+	private String[] mCustomResNames = new String[] {
+		"custom_bar_opaque",
+		"stat_sys_clock",
+		"stat_sys_battery",
+		"stat_sys_battery_charge",
+		"stat_sys_battery_nothealth",
+		"stat_sys_wifi",
+		"stat_sys_wifi_act",
+		"stat_sys_alarm",
+		"stat_sys_ringer_silent",
+	};
+	private String[] mTransResNames = new String[] {
+		"custom_bar_trans",
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+		null,
+	};
 	
 	private Rect mRect = new Rect();
 	
@@ -74,6 +130,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		mPkgName = getPackageName();
 		
 		mContent = (MyContent) findViewById(R.id.content);
 		mTvSizeInfo = (TextView) findViewById(R.id.tv_size_info);
@@ -402,13 +460,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
     
     private void setCustomBarOpaque() {
-    	// custom bar resource must be drawable !!
-    	Utils.setCustomBarColor(mContent, getPackageName(), "custom_bar_opaque");
+    	Utils.setCustomBarColor(mContent, mPkgName, 
+    			mCustomTypes, mCustomResNames);
     }
     
     private void setCustomBarTrans() {
     	// custom bar resource must be drawable !!
-    	Utils.setCustomBarColor(mContent, getPackageName(), "custom_bar_trans");
+    	Utils.setCustomBarColor(mContent, mPkgName, 
+    			mCustomTypes, mTransResNames);
     }
     
     @SuppressLint("InflateParams")
