@@ -94,18 +94,18 @@
             />
         
         <Button
-        	android:id="@+id/btn_goto_normal"
+        	android:id="@+id/btn_goto_get"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 			android:layout_below="@+id/btn_custom_opaque"
-            android:text="GoTo normal"
+            android:text="Get Custom Color"
             />
         
        <Button
         	android:id="@+id/btn_goto_low_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-			android:layout_below="@+id/btn_goto_normal"
+			android:layout_below="@+id/btn_goto_get"
             android:text="GoTo LowProfile"
             />
                 

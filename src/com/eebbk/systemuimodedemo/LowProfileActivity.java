@@ -15,7 +15,7 @@ public class LowProfileActivity extends Activity implements View.OnClickListener
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_normal);
+		setContentView(R.layout.activity_get_custom);
 		
 		mContent = findViewById(R.id.content);
 		mTv = (TextView) findViewById(R.id.tv_1);

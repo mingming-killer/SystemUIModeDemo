@@ -18,7 +18,7 @@ public class TranslucentActivity extends Activity implements View.OnClickListene
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_normal);
+		setContentView(R.layout.activity_get_custom);
 		
 		mContent = findViewById(R.id.content);
 		mTv = (TextView) findViewById(R.id.tv_1);
@@ -26,7 +26,7 @@ public class TranslucentActivity extends Activity implements View.OnClickListene
 		
 		mContent.setSystemUiVisibility(SYSTEM_UI_FLAG_TRANSLUCENT_BAR);
 		
-		mTv.setText("Translucent SystemUI Activity");
+		//mTv.setText("Translucent SystemUI Activity");
 		mBtnTest.setOnClickListener(this);
 	}
 

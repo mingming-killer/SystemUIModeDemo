@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 
 public class Utils {
@@ -232,11 +234,44 @@ public class Utils {
 	public static void setCustomBarColor(Object obj, String pkg, int[] types, String[] resNames) {
 		// we use reflect to access our platform api ... ...
 		// or you can get the custom sdk to access this directly: 
-		//   View.setCustomBarColor(String, int[], String[])
+		// void View.setCustomBarColor(String, int[], String[])
     	invokeMethod(View.class, obj, 
     			"setCustomBarColor", 
     			SET_CUSTOM_BAR_COLOR, 
     			pkg, types, resNames);
 	}
+	
+	// [0]:       custom resource provider package name.
+	// [1] ~ [9]: custom bar item resource name.
+	public static String[] getLastCustomBarColor(Object obj) {
+		// we use reflect to access our platform api ... ...
+		// or you can get the custom sdk to access this directly: 
+		// String[] View.getLastCustomBarColor()
+		try {
+			return (String[]) invokeMethod(View.class, obj,
+					"getLastCustomBarColor", null, (Object[]) null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+    public static Drawable loadCustomBarColor(String pkg, Resources res, String resName) {
+        if (null == res || null == resName) return null;
+        try {
+            int resId = getCustomResId(pkg, res, resName, "drawable");
+            return res.getDrawable(resId);
+        } catch (Exception e) { 
+            e.printStackTrace();
+            return null;
+        }
+    }    
+    
+    private static int getCustomResId(String pkg, Resources res, String name, String type) {
+        if (null == res) {
+            return 0;
+        }    
+        return res.getIdentifier(name, type, pkg);
+    }   
 	
 }

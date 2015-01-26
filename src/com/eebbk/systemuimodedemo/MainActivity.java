@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -44,6 +45,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public static final int STATUS_BAR_WIFI_ACT = 6;
     public static final int STATUS_BAR_ALARM = 7;
     public static final int STATUS_BAR_SOUND = 8;
+    public static final int STATUS_BAR_CUSTOM_MAX_ITEM = 9;
 	
 	// after update sdk, you can access View.xx directly.
 	/*public static final int SYSTEM_UI_FLAG_IMMERSIVE_STICKY = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
@@ -111,7 +113,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	private CheckBox mCbModeCustomBarColor;
 	
 	private Button mBtnShowNotification;
-	private Button mBtnGoToNormal;
+	private Button mBtnGoToGet;
 	private Button mBtnGoToLowProfile;
 	private Button mBtnGoToFullScreen;
 	private Button mBtnGoToTranslucent;
@@ -131,6 +133,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		//this.getWindow().get
+		
 		mPkgName = getPackageName();
 		
 		mContent = (MyContent) findViewById(R.id.content);
@@ -144,7 +148,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		mCbModeCustomBarColor = (CheckBox) findViewById(R.id.cb_mode_custom_bar_color);
 		
 		mBtnShowNotification = (Button) findViewById(R.id.btn_show_notification);
-		mBtnGoToNormal = (Button) findViewById(R.id.btn_goto_normal);
+		mBtnGoToGet = (Button) findViewById(R.id.btn_goto_get);
 		mBtnGoToLowProfile = (Button) findViewById(R.id.btn_goto_low_profile);
 		mBtnGoToFullScreen = (Button) findViewById(R.id.btn_goto_full_screen);
 		mBtnGoToTranslucent = (Button) findViewById(R.id.btn_goto_translucent);
@@ -152,6 +156,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		mBtnCustomOpaque = (Button) findViewById(R.id.btn_custom_opaque);
 		mBtnCustomTrans = (Button) findViewById(R.id.btn_custom_trans);
 		mBtnClick = (Button) findViewById(R.id.btn_click);
+		
+		//WindowManager wm = this.getSystemService(Context.WINDOW_SERVICE);
+		//wm.getLastSystemUiFlags()
 		
         mLvTest.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, mStrings));
@@ -165,7 +172,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		mCbModeCustomBarColor.setOnClickListener(this);
 		
 		mBtnShowNotification.setOnClickListener(this);
-		mBtnGoToNormal.setOnClickListener(this);
+		mBtnGoToGet.setOnClickListener(this);
 		mBtnGoToLowProfile.setOnClickListener(this);
 		mBtnGoToFullScreen.setOnClickListener(this);
 		mBtnGoToTranslucent.setOnClickListener(this);
@@ -239,6 +246,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
             //mUIHandler.sendEmptyMessageDelayed(MSG_UI_CHANGE_SYSTEM_FLAG, 2000);
             //mPopup = false;
         }
+        
+        if (mCbModeCustomBarColor.isChecked()) {
+        	setCustomBarOpaque();
+        	switchCustomBarColor(true);
+        }
     }
 
     @Override
@@ -278,8 +290,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		
 		if (v.equals(mBtnShowNotification)) {
 			showNotification();
-		} else if (v.equals(mBtnGoToNormal)) {
-			goToNormal();
+		} else if (v.equals(mBtnGoToGet)) {
+			goToGet();
 		} else if (v.equals(mBtnGoToLowProfile)) {
 			goToLowProfile();
 		} else if (v.equals(mBtnGoToFullScreen)) {
@@ -434,8 +446,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         nm.notify(ID, n);
     }
     
-    private void goToNormal() {
-    	Intent intent = new Intent(this, NormalActivity.class);
+    private void goToGet() {
+    	Intent intent = new Intent(this, GetCustomActivity.class);
     	startActivity(intent);
     }
     

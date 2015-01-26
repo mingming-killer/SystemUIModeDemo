@@ -1,0 +1,70 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/content"
+    android:background="#ffff0000"
+    >
+    
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back" 
+        />
+	<Button
+        android:id="@+id/btn_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Custom Bar" 
+        />
+    
+    <ImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="25dp" 
+        />
+    <ImageView
+        android:id="@+id/iv_clock"
+        android:layout_width="match_parent"
+        android:layout_height="25dp" 
+        />
+    <ImageView
+        android:id="@+id/iv_battery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        />
+    <ImageView
+        android:id="@+id/iv_battery_charge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        />	
+    <ImageView
+        android:id="@+id/iv_battery_no_health"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        />	    
+    <ImageView
+        android:id="@+id/iv_wifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        />
+    <ImageView
+        android:id="@+id/iv_wifi_act"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        />	    	
+    <ImageView
+        android:id="@+id/iv_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        />	    
+    <ImageView
+        android:id="@+id/iv_sound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        />	    
+    
+</LinearLayout>
